@@ -1,0 +1,3 @@
+*/5 * * * * . ~/kappe/restart_graph.sh
+20,50 * * * * . ~/kappe/update_sensordata.sh
+0 8 * * * . ~/kappe/dyndns.sh
