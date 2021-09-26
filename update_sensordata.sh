@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-. .env
+. ~/kappe/.env
 
 curl -X POST https://content.dropboxapi.com/2/files/download\
      --header "Authorization: Bearer $DROPBOX_AUTH_TOKEN"\
