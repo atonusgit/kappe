@@ -1,3 +1,4 @@
 */5 * * * * . ~/kappe/restart_graph.sh
 20,50 * * * * . ~/kappe/update_sensordata.sh
 0 8 * * * . ~/kappe/dyndns.sh
+0 8 * * * . ~/kappe/upload_backup_to_dropbox.sh
