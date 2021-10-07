@@ -16,4 +16,4 @@ alias ssensorit="echo 'Katkaistaan mahdollinen yhteys'; sudo kill $(ps -x | grep
 alias killtunnel="pgrep -a sshd | grep -v priv | grep -v usr | grep -v @ | grep -v accepted | grep -v net | awk '{print $1;}' | xargs kill"
 alias sshtunnel="echo  1 > $ROOT_DIRECTORY/switches/ssh_tunnel_sensorit"
 
-cd ~/kappe
+cd $ROOT_DIRECTORY
