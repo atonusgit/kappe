@@ -111,7 +111,7 @@ for name in names:
 				battery_voltages[name].append("None")
 
 df = pd.DataFrame(soil_moistures['multa'], columns=['data'])
-soil_moistures['multa_smooth'] = df['data'].rolling(window=12).mean()
+soil_moistures['multa_smooth'] = df['data'].rolling(window=72).mean()
 
 app.layout = html.Div(children=[
 	html.H1(children='Ruuvidata'),
@@ -144,18 +144,19 @@ app.layout = html.Div(children=[
     	id='soil_moistures',
 		figure={
 			'data': [
-				{'x': timestamps['multa'], 'y': soil_moistures['multa_smooth'], 'type': 'line', 'name': 'Multa'},
+				{'x': timestamps['multa'], 'y': soil_moistures['multa_smooth'], 'type': 'line', 'name': 'Multa tasaus 6h'},
 			],
 			'layout': {
 				'title': 'Mullan kosteus',
 				'xaxis':{
-					'title':''
+					'title':'200 (max kuiva) - 2000 (max kostea)'
 				},
 				'yaxis':{
-					'title':'?',
+					'title':'',
 					'range': [int(soil_moistures['multa_smooth'].tail(1).values[0] - 50), math.ceil(soil_moistures['multa_smooth'].max())]
 				},
-				'hovermode': 'x'
+				'hovermode': 'x',
+				'showlegend': True
 			}
 		}
 	),
