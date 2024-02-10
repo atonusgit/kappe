@@ -20,7 +20,7 @@ app = dash.Dash()
 utc_offset = int(str(datetime.now(timezone.utc).astimezone().utcoffset()).split(':')[0])
 utc_offset = 0 #override
 
-names = ['kuisti', 'saunan_putket', 'keittion_putket', 'vessan_putket', 'sisalla', 'vessa', 'kasvihuone', 'multa']
+names = ['kuisti', 'saunan_putket', 'keittion_putket', 'vessan_putket', 'sisalla', 'peurakarkotin', 'kasvihuone']
 timestamps = {}
 temperatures = {}
 humidities = {}
@@ -110,8 +110,8 @@ for name in names:
 				humidities[name].append("None")
 				battery_voltages[name].append("None")
 
-df = pd.DataFrame(soil_moistures['multa'], columns=['data'])
-soil_moistures['multa_smooth'] = df['data'].rolling(window=72).mean()
+#df = pd.DataFrame(soil_moistures['multa'], columns=['data'])
+#soil_moistures['multa_smooth'] = df['data'].rolling(window=5).mean()
 
 app.layout = html.Div(children=[
 	html.H1(children='Ruuvidata'),
@@ -124,9 +124,9 @@ app.layout = html.Div(children=[
 				{'x': timestamps['saunan_putket'], 'y': temperatures['saunan_putket'], 'type': 'line', 'name': 'Saunan putket'},
 				{'x': timestamps['keittion_putket'], 'y': temperatures['keittion_putket'], 'type': 'line', 'name': 'Keittiön putket'},
 				{'x': timestamps['vessan_putket'], 'y': temperatures['vessan_putket'], 'type': 'line', 'name': 'Vessan putket'},
-				{'x': timestamps['vessa'], 'y': temperatures['vessa'], 'type': 'line', 'name': 'Vessa'},
+				{'x': timestamps['peurakarkotin'], 'y': temperatures['peurakarkotin'], 'type': 'line', 'name': 'Peurakarkotin'},
 				{'x': timestamps['kasvihuone'], 'y': temperatures['kasvihuone'], 'type': 'line', 'name': 'Kasvihuone'},
-				{'x': timestamps['multa'], 'y': temperatures['multa'], 'type': 'line', 'name': 'Multa'},
+#				{'x': timestamps['multa'], 'y': temperatures['multa'], 'type': 'line', 'name': 'Multa'},
 			],
 			'layout': {
 				'title': 'Lämpötilat',
@@ -140,26 +140,27 @@ app.layout = html.Div(children=[
 			}
 		}
 	),
-	dcc.Graph(
-    	id='soil_moistures',
-		figure={
-			'data': [
-				{'x': timestamps['multa'], 'y': soil_moistures['multa_smooth'], 'type': 'line', 'name': 'Multa tasaus 6h'},
-			],
-			'layout': {
-				'title': 'Mullan kosteus',
-				'xaxis':{
-					'title':'200 (max kuiva) - 2000 (max kostea)'
-				},
-				'yaxis':{
-					'title':'',
-					'range': [int(soil_moistures['multa_smooth'].tail(1).values[0] - 50), math.ceil(soil_moistures['multa_smooth'].max())]
-				},
-				'hovermode': 'x',
-				'showlegend': True
-			}
-		}
-	),
+#	dcc.Graph(
+#    	id='soil_moistures',
+#		figure={
+#			'data': [
+#				{'x': timestamps['multa'], 'y': soil_moistures['multa_smooth'], 'type': 'line', 'name': 'Multa tasaus 6h'},
+#			],
+#			'layout': {
+#				'title': 'Mullan kosteus',
+#				'xaxis':{
+#					'title':'200 (max kuiva) - 2000 (max kostea)'
+#				},
+#				'yaxis':{
+#					'title':'',
+#					'range': [200, math.ceil(soil_moistures['multa_smooth'].max())]
+#					'range': [int(soil_moistures['multa_smooth'].tail(1).values[0] - 50), math.ceil(soil_moistures['multa_smooth'].max())]
+#				},
+#				'hovermode': 'x',
+#				'showlegend': True
+#			}
+#		}
+#	),
 	dcc.Graph(
 		id='humidities',
 		figure={
@@ -169,7 +170,7 @@ app.layout = html.Div(children=[
 				{'x': timestamps['saunan_putket'], 'y': humidities['saunan_putket'], 'type': 'line', 'name': 'Saunan putket'},
 				{'x': timestamps['keittion_putket'], 'y': humidities['keittion_putket'], 'type': 'line', 'name': 'Keittiön putket'},
 				{'x': timestamps['vessan_putket'], 'y': humidities['vessan_putket'], 'type': 'line', 'name': 'Vessan putket'},
-				{'x': timestamps['vessa'], 'y': humidities['vessa'], 'type': 'line', 'name': 'Vessa'},
+				{'x': timestamps['peurakarkotin'], 'y': humidities['peurakarkotin'], 'type': 'line', 'name': 'Peurakarkotin'},
 				{'x': timestamps['kasvihuone'], 'y': humidities['kasvihuone'], 'type': 'line', 'name': 'Kasvihuone'},
 			],
 			'layout': {
@@ -193,7 +194,7 @@ app.layout = html.Div(children=[
 				{'x': timestamps['saunan_putket'], 'y': battery_voltages['saunan_putket'], 'type': 'line', 'name': 'Saunan putket'},
 				{'x': timestamps['keittion_putket'], 'y': battery_voltages['keittion_putket'], 'type': 'line', 'name': 'Keittiön putket'},
 				{'x': timestamps['vessan_putket'], 'y': battery_voltages['vessan_putket'], 'type': 'line', 'name': 'Vessan putket'},
-				{'x': timestamps['vessa'], 'y': battery_voltages['vessa'], 'type': 'line', 'name': 'Vessa'},
+				{'x': timestamps['peurakarkotin'], 'y': battery_voltages['peurakarkotin'], 'type': 'line', 'name': 'Peurakarkotin'},
 				{'x': timestamps['kasvihuone'], 'y': battery_voltages['kasvihuone'], 'type': 'line', 'name': 'Kasvihuone'},
 			],
 			'layout': {
