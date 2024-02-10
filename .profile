@@ -10,6 +10,9 @@ killssh () {
     killall -9 ssh
 }
 
+alias sendmodel="echo model?; read model; scp -P $REVERSE_SSH_PORT ~/$model $REVERSE_SSH_USERNAME@localhost:~/"
+alias joko="ps -x | grep sshd"
+alias killssh2="sudo kill $(ps -x | grep sshd | grep -v pts | sed -e 's/^[[:space:]]*//' | cut -d " " -f1 | tr '\n' ' ')"
 alias sensorit="ssh $REVERSE_SSH_USERNAME@$REVERSE_SSH_HOSTNAME -p $REVERSE_SSH_PORT"
 alias wsock="nohup websocat -t ws-l:$(hostname -I | awk '{print $1;}'):$WEBSOCKET_PORT broadcast:mirror: --ping-interval 60 &"
 alias ssensorit="echo 'Katkaistaan mahdollinen yhteys'; sudo kill $(ps -x | grep sshd | grep -v @ | grep -v grep | grep -v ssensorit | awk '{print $1;}'); /usr/bin/sleep 5; echo 'Katkaistu. Odotetaan uuden yhteyden muodostumista...'; while [[ $([[ -z $(ps -x | grep sshd | grep -v @ | grep -v grep | grep -v ssensorit | awk '{print $1;}') ]] && echo 1 || echo 0) -eq 1 ]]; do sleep 1; done; echo 'Yhteys muodostettu'; sleep 2; sensorit"
